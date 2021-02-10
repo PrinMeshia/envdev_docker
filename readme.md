@@ -1,12 +1,15 @@
-Environnemen php
+*PHP ENVIRONMENT FOR ARM ARCHITECTURE*
 
-Composants
+components
 
-Php 7.4
-mysql
-phpmyadmin
-maildev
-symfony
+- Php 7.4
+- mysql
+- phpmyadmin
+- maildev
+- symfony
 
-lors de la première utilisation, lancé la commande `init.sh
+Work fine for symfony 5.*
+
+
+lors de la première utilisation, lancer la commande `init.sh
 
