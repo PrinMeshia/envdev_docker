@@ -22,13 +22,19 @@ prepare_Maildev()
 
 prepare_symfony_project()
 {
-	docker exec www_docker_symfony composer create-project symfony/website-skeleton $PROJECT_DIR 
-	sudo chown -R $USER ./ 
-	
+	if [ "$IS_NEW_PROJECT" = true ]; then
+		docker exec www_docker_symfony composer create-project symfony/website-skeleton $PROJECT_DIR 
+		sudo chown -R $USER ./ 
+	else
+		docker exec -i  www_docker_symfony bash -c  "cd $PROJECT_DIR  && composer install "
+	fi
 	sed -i "/MAILER_DSN=/c\MAILER_DSN=smtp://maildev_docker_symfony:25" $PROJECT_DIR/.env
-	
 	sed -i "/DATABASE_URL=/c\DATABASE_URL=mysql://root:@db_docker_symfony:3306/${PROJECT_BDD}?serverVersion=mariadb-10.3.27" $PROJECT_DIR/.env
 	docker exec -i  www_docker_symfony bash -c  "cd $PROJECT_DIR  && php bin/console doctrine:database:create"
+	if [ "$IS_NEW_PROJECT" != true ]; then
+		yes y | docker exec -i  www_docker_symfony bash -c  "cd $PROJECT_DIR  && php bin/console doctrine:migration:migrate"
+	fi
+
 }
 set_folder_name()
 {
@@ -37,10 +43,10 @@ set_folder_name()
 		PROJECT_DIR=$userdir
 	fi
 	read -p "Enter the database name (default : $PROJECT_DIR) : " userbdd
-	if [ -z "${userbdd}" ]; then
-		PROJECT_BDD=$PROJECT_DIR
+	if [ ! -z "${userbdd}" ]; then
+		PROJECT_BDD=$userdir
 	else
-		PROJECT_BDD=$userbdd
+		PROJECT_BDD=$PROJECT_DIR
 	fi
 }
 set_web_port()
@@ -64,24 +70,17 @@ set_project_var()
 {
 	read -p "Enter git repository url (Empty if new project) : " url
 	if [ ! -z "${url}" ] ; then
+		GIT_REPO_URL=$url
 		IS_NEW_PROJECT=false
 		basename=$(basename $url)
 		filename=${basename%.*}
-		while true; do
-				read -p "Use $filename as folder name (${yesword} / ${noword})? " yn
-				case $yn in
-					${yesptrn##^} ) PROJECT_DIR=$filename ; break ;;
-					${noptrn##^} )  set_folder_name break ;;
-					* ) printf "Wrong response : (${yesword} / ${noword}) .";;
-				esac
-		done
+		PROJECT_DIR=$filename
 	else
 		printf "No git repository\n"
 		printf "Create empty project\n"
-		set_folder_name
 	fi
-
-	#defin web port
+	set_folder_name
+	#define web port
 	set_web_port
 }
 edit_vhost()
@@ -99,7 +98,6 @@ edit_docker_compose()
 #Define all variable
 printf  "PREPARE PROJECT VAR\n"
 set_project_var
-
 printf  "PREPARE PROJECT MAILDEV"
 prepare_Maildev
 printf  " >>> ${GREEN}DONE${NC}\n"
@@ -109,10 +107,10 @@ edit_vhost
 printf " >>> ${GREEN}DONE${NC}\n"
 
 
-if [ ! $IS_NEW_PROJECT ] ; then
-	printf  "GET SOURCE PROJECT"
-	git clone -q $GIT_REPO_URL $PROJECT_DIR
-	printf  " >>> ${GREEN}DONE${NC}\n"
+if [ "$IS_NEW_PROJECT" != true ]; then
+ 	printf  "GET SOURCE AT : ${GIT_REPO_URL}"
+ 	git clone -q $GIT_REPO_URL $PROJECT_DIR
+ 	printf  " >>> ${GREEN}DONE${NC}\n"
 fi
 
 printf  "CONFIGURE DOCKER_COMPOSE"
@@ -123,10 +121,8 @@ printf  "LAUNCH DOCKER\n"
 docker-compose up -d --quiet-pull
 printf  " >>> ${GREEN}DONE${NC}\n"
 
-if [ $IS_NEW_PROJECT ] ; then
-	printf  "INIT SYMFONT PROJECT\n"
-	prepare_symfony_project
-	printf  "${GREEN}DONE${NC}\n"
-fi
+printf  "INIT SYMFONY PROJECT\n"
+prepare_symfony_project
+printf  "${GREEN}DONE${NC}\n"
 
-
+printf "\nDocker Symfony installation : ${GREEN}DONE${NC}\n"
