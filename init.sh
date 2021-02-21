@@ -11,13 +11,16 @@ IS_NEW_PROJECT=true
 PMA_PORT=8081
 MAILDEV_PORT=8082
 WWW_PORT=8080
+ARCH=""
 
 prepare_Maildev()
 {
 	rm -rf maildev
 	repository="https://github.com/maildev/maildev.git"
 	git clone -q $repository 
-	sed -i '/FROM/s/node:/arm32v7\/node:/g' maildev/Dockerfile
+	if [ $ARCH="armhf" ]; then
+	 	sed -i '/FROM/s/node:/arm32v7\/node:/g' maildev/Dockerfile
+	fi
 }
 
 prepare_symfony_project()
@@ -95,6 +98,20 @@ edit_docker_compose()
 	sed -i "s/MAILDEV_PORT/${MAILDEV_PORT}/g" docker-compose.yml
 	sed -i "s/WWW_PORT/${WWW_PORT}/g" docker-compose.yml
 }
+
+case $(eval "dpkg --print-architecture") in
+  armhf)
+    ARCh="arm32v7"
+    ;;
+  arm64 )
+    ARCh="arm64"
+    ;;
+  *)
+    echo -n "unknown"
+    ;;
+esac
+
+
 #Define all variable
 printf  "PREPARE PROJECT VAR\n"
 set_project_var
