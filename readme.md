@@ -11,5 +11,5 @@ components
 Work fine for symfony 5.*
 
 
-use init.sh to install environment
+use init.sh to install the environment
 
