@@ -8,8 +8,11 @@ components
 - maildev
 - symfony
 
-Work fine for symfony 5.*
+Work fine for symfony 5.+
 
 
 use init.sh to install the environment
 
+*prerequisite*
+
+Docker instaled and have root privilege
