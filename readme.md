@@ -11,5 +11,5 @@ components
 Work fine for symfony 5.*
 
 
-lors de la première utilisation, lancer la commande `init.sh
+use init.sh for install environment
 
