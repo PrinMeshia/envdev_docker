@@ -7,6 +7,7 @@ components
 - phpmyadmin
 - maildev
 - symfony
+- yarn
 
 Work fine for symfony 5.+
 
