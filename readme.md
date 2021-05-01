@@ -1,13 +1,12 @@
-Php Env for arm arch
+# Php Env for arm arch
 
-Components
+COMPONENTS
 
-Php 7.4
-mysql
-phpmyadmin
-maildev
-symfony
-Laravel
+- Php 7.4
+- mysql
+- phpmyadmin
+- maildev
+- symfony
+- Laravel
 
-For the the launch execute Init.sh
-
+For the the launch execute `Init.sh`
