@@ -1,5 +1,6 @@
-FROM php:7.4-apache
 
+FROM php:7.4.1-apache
+USER root
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 RUN apt-get update \
@@ -36,9 +37,13 @@ RUN cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/ && \
 
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar dom mbstring zip gd xsl
+RUN docker-php-ext-install -j$(nproc) gd
+RUN docker-php-ext-install pdo pdo_mysql opcache intl zip calendar dom mbstring zip gd xsl
 RUN pecl install apcu && docker-php-ext-enable apcu
 
 RUN echo 'alias symfony="php bin/console"' >> ~/.bashrc
 
 WORKDIR /var/www/
+
+
+

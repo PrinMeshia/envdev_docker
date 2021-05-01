@@ -1,19 +1,13 @@
-*PHP ENVIRONMENT FOR ARM ARCHITECTURE*
+Php Env for arm arch
 
-components
+Components
 
-- Php 7.4
-- mysql
-- phpmyadmin
-- maildev
-- symfony
-- yarn
+Php 7.4
+mysql
+phpmyadmin
+maildev
+symfony
+Laravel
 
-Work fine for symfony 5.+
+For the the launch execute Init.sh
 
-
-use init.sh to install the environment
-
-*prerequisite*
-
-Docker instaled and have root privilege
