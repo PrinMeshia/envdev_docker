@@ -6,7 +6,14 @@ COMPONENTS
 - mysql
 - phpmyadmin
 - maildev
-- symfony
-- Laravel
+- symfony or Laravel
 
 For the the launch execute `Init.sh`
+
+------------
+
+For symfony 
+The command `php bin/console`  can be launched by entering the command `symfony` 
+
+for laravel 
+The command `php artisan`  can be launched by entering the command `artisan` 
