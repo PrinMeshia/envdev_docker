@@ -1,15 +1,19 @@
-*PHP ENVIRONMENT FOR ARM ARCHITECTURE*
+# Php Env for arm arch
 
-components
+COMPONENTS
 
 - Php 7.4
 - mysql
 - phpmyadmin
 - maildev
-- symfony
+- symfony or Laravel
 
-Work fine for symfony 5.*
+For the the launch execute `Init.sh`
 
+------------
 
-lors de la première utilisation, lancer la commande `init.sh
+For symfony 
+The command `php bin/console`  can be launched by entering the command `symfony` 
 
+for laravel 
+The command `php artisan`  can be launched by entering the command `artisan` 
