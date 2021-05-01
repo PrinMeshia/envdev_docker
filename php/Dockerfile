@@ -42,6 +42,7 @@ RUN docker-php-ext-install pdo pdo_mysql opcache intl zip calendar dom mbstring 
 RUN pecl install apcu && docker-php-ext-enable apcu
 
 RUN echo 'alias symfony="php bin/console"' >> ~/.bashrc
+RUN echo 'alias artisan="php artisan"' >> ~/.bashrc
 
 WORKDIR /var/www/
 
