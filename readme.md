@@ -2,7 +2,7 @@
 
 COMPONENTS
 
-- Php 7.4
+- Php 7.4 (migration to php8 coming soon)
 - mysql
 - phpmyadmin
 - maildev
