@@ -20,3 +20,6 @@ The command `php bin/console`  can be launched by entering the command `symfony`
 
 for laravel 
 The command `php artisan`  can be launched by entering the command `artisan` 
+
+next update : 
+ - add x86/x64 archiecture
