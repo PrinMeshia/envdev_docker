@@ -2,13 +2,16 @@
 
 COMPONENTS
 
-- Php 7.4 (migration to php8 coming soon)
-- mysql
+- Php ^8.1
+- mariaDB
 - phpmyadmin
 - maildev
 - symfony or Laravel
 
-For the the launch execute `Init.sh`
+REQUIRE 
+ - whiptail
+
+For the first launch execute `Init.sh`
 
 ------------
 
