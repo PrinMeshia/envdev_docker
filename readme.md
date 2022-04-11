@@ -2,13 +2,16 @@
 
 COMPONENTS
 
-- Php 7.4
-- mysql
+- Php ^8.1
+- mariaDB
 - phpmyadmin
 - maildev
 - symfony or Laravel
 
-For the the launch execute `Init.sh`
+REQUIRE 
+ - whiptail
+
+For the first launch execute `Init.sh`
 
 ------------
 
@@ -17,3 +20,6 @@ The command `php bin/console`  can be launched by entering the command `symfony`
 
 for laravel 
 The command `php artisan`  can be launched by entering the command `artisan` 
+
+next update : 
+ - add x86/x64 archiecture

@@ -1,8 +1,8 @@
-version: "3.8"
+version: "3.3"
 services:
 
     db:
-        image: jsurf/rpi-mariadb
+        image: SQL_IMAGE
         container_name: db_dev_env
         restart: always
         volumes:
