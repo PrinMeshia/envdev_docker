@@ -188,10 +188,12 @@ function initProject() {
 }
 function startInstall() {
     {
-        sleep 0.5
-        echo -e "XXX\n0\nMaildev configuration... \nXXX"
-        prepareMaildev
-        echo -e "XXX\n25\nMaildev configuration... Done.\nXXX"
+        if [[ $ARCH = "arm32v7" || $ARCH = "arm64v8"  ]]; then
+            sleep 0.5
+            echo -e "XXX\n0\nMaildev configuration... \nXXX"
+            prepareMaildev
+            echo -e "XXX\n25\nMaildev configuration... Done.\nXXX"
+        fi
         sleep 0.5
 
         echo -e "XXX\n25\nVhost Configuration... \nXXX"

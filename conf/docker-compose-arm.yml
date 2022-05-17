@@ -36,12 +36,12 @@ services:
             - dev
 
     www:
-        build: php
+        build: www
         container_name: www_dev_env
         ports:
           - WWW_PORT:80
         volumes:
-            - ./php/vhosts:/etc/apache2/sites-enabled
+            - ./www/vhosts:/etc/apache2/sites-enabled
             - ./:/var/www
         restart: always
         networks:

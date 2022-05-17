@@ -1,3 +1,4 @@
 maildev
 project
 www/vhosts/vhosts.conf
+docker-compose.yml

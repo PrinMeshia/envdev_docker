@@ -1,9 +1,14 @@
 # tools to create php environment for symfony or laravel
 ---
-compatibility :
+COMPATIBILITY :
 * tested on raspberryPi 4
-* tested on wsl2 Ubuntu 22.04 
+* tested on wsl2 Ubuntu 22
 
+---
+WARNING:
+for Laravel, some authorization is necessary
+
+---
 COMPONENTS
 
 - PHP ^8.0
