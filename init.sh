@@ -125,7 +125,7 @@ function recapBeforeInstall() {
         "WWW port" "$WWW_PORT" ON 3>&1 1>&2 2>&3)
 
     exitstatus=$?
-    if [ $exitstatus = 0 ]; then
+    if [ $exitstatus -eq 0 ]; then
         startInstall
     else
         exitInstall
@@ -135,18 +135,23 @@ function prepareMaildev() {
     rm -rf maildev
     repository="https://github.com/maildev/maildev.git"
     git clone -q $repository
-    if [ $ARCH = "arm32v7" ]; then
+    if [[ $ARCH = "arm32v7" ]]; then
         sed -i '/FROM/s/node:/arm32v7\/node:/g' maildev/Dockerfile
-    elif [ $ARCH = "arm64v8" ]; then
+    elif [[ $ARCH = "arm64v8" ]]; then
         sed -i '/FROM/s/node:/arm64v8\/node:/g' maildev/Dockerfile
     fi
 }
 function editVhost() {
-    cp conf/"${FRAMEWORK_LIST[$USER_FRAMEWORK - 1]}-"vhosts.conf php/vhosts/vhosts.conf
-    sed -i "s/PROJECT/${PROJECT_DIR}/g" php/vhosts/vhosts.conf
+    [ -d www/vhosts ] || mkdir www/vhosts
+    cp conf/"${FRAMEWORK_LIST[$USER_FRAMEWORK - 1]}-"vhosts.conf www/vhosts/vhosts.conf
+    sed -i "s/PROJECT/${PROJECT_DIR}/g" www/vhosts/vhosts.conf
 }
 function editDockerCompose() {
-    cp conf/docker-compose.yml docker-compose.yml
+    if [[ $ARCH = "arm32v7" || $ARCH = "arm64v8"  ]]; then
+        cp conf/docker-compose-arm.yml docker-compose.yml
+    else
+        cp conf/docker-compose.yml docker-compose.yml
+    fi
     sed -i "s/PMA_PORT/${PMA_PORT}/g" docker-compose.yml
     sed -i "s/MAILDEV_PORT/${MAILDEV_PORT}/g" docker-compose.yml
     sed -i "s/WWW_PORT/${WWW_PORT}/g" docker-compose.yml

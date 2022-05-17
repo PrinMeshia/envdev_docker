@@ -24,19 +24,18 @@ RUN apt-get update \
     libjpeg-dev \
     libfreetype6-dev \
     libsodium-dev;
-
-RUN curl -sL https://deb.nodesource.com/setup_17.x | bash -
 RUN apt-get update \
  && apt-get install -y \
- nodejs
+ nodejs npm
 RUN npm install -g yarn  
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
 
-RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
-   mv composer.phar /usr/local/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer --version
 
 RUN useradd -G www-data,root -u $UID $USER -d /home/$USER 
 RUN mkdir -p /home/$USER/.composer && \
@@ -56,5 +55,5 @@ RUN echo 'alias symfony="php bin/console"' >> ~/.bashrc
 RUN echo 'alias artisan="php artisan"' >> ~/.bashrc
 
 
-WORKDIR /var/www/
+WORKDIR /var/www
 USER $user
