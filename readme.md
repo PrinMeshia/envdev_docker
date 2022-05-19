@@ -42,6 +42,8 @@ COMPONENTS
 REQUIRE
 
 - whiptail
+- docker
+- docker-compose
 
   
 
