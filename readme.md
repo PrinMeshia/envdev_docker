@@ -68,7 +68,6 @@ The command `php artisan` can be launched by entering the command `artisan`
 todo :
 
 - remove user password required
-
 - log installation => less information in screen
-
 - show log in final
+- wordpress support
